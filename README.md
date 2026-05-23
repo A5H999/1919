@@ -103,6 +103,10 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
       padding:
         max(28px, env(safe-area-inset-top))
         max(28px, env(safe-area-inset-right))
