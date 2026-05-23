@@ -1,4 +1,5 @@
-[index.html](https://github.com/user-attachments/files/28177833/index.html)[Uploading index.html…<!doctype html>
+[index-2.html](https://github.com/user-attachments/files/28177876/index-2.html)
+<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8">
@@ -18,8 +19,7 @@
       padding: 0;
     }
 
-    html,
-    body {
+    html {
       width: 100%;
       height: 100%;
       overflow: hidden;
@@ -27,7 +27,14 @@
 
     body {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       background: #1a1a2e;
       color: #fff;
       font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", "Segoe UI", sans-serif;
@@ -45,7 +52,11 @@
     }
 
     #game-container {
-      position: relative;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       width: 100%;
       height: 100%;
       overflow: hidden;
@@ -114,6 +125,8 @@
       touch-action: pan-y;
       transition: opacity 0.35s ease;
       justify-content: flex-start;
+      padding-top: max(40px, env(safe-area-inset-top));
+      padding-bottom: max(40px, env(safe-area-inset-bottom));
     }
 
     #start-screen h1 {
@@ -763,16 +776,6 @@
   </div>
 
   <script>
-    // 브라우저 주소창 높이 변동 대응 - 화면 밀림 방지
-    function setAppHeight() {
-      const h = window.innerHeight;
-      document.documentElement.style.setProperty('--app-height', h + 'px');
-      document.getElementById('game-container').style.height = h + 'px';
-    }
-    setAppHeight();
-    window.addEventListener('resize', setAppHeight);
-    window.addEventListener('orientationchange', () => setTimeout(setAppHeight, 300));
-
     const TAEGEUKGI_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="-36 -24 72 48"><path fill="#fff" d="M-36-24h72v48h-72z"/><g transform="rotate(-56.31)"><g id="b"><path id="a" stroke="#000" stroke-width="2" d="M-6-25H6m-12 3H6m-12 3H6"/><use href="#a" y="44"/></g><path stroke="#fff" d="M0 17v10"/><circle r="12" fill="#cd2e3a"/><path fill="#0047a0" d="M0-12A6 6 0 0 0 0 0a6 6 0 0 1 0 12 12 12 0 0 1 0-24Z"/></g><g transform="rotate(-123.69)"><use href="#b"/><path stroke="#fff" d="M0-23.5v3M0 17v3.5m0 3v3"/></g></svg>`;
     const taegeukgiImg = new Image();
     taegeukgiImg.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(TAEGEUKGI_SVG)));
@@ -855,6 +858,14 @@
       const height = vv ? vv.height : window.innerHeight;
       const ratio = window.devicePixelRatio || 1;
       document.documentElement.style.setProperty("--app-height", height + "px");
+      // game-container도 정확한 visible 영역으로 고정
+      const container = document.getElementById("game-container");
+      container.style.width = width + "px";
+      container.style.height = height + "px";
+      if (vv) {
+        container.style.top = vv.offsetTop + "px";
+        container.style.left = vv.offsetLeft + "px";
+      }
       canvas.width = Math.floor(width * ratio);
       canvas.height = Math.floor(height * ratio);
       canvas.style.width = width + "px";
@@ -1824,4 +1835,3 @@
   </script>
 </body>
 </html>
-]()
